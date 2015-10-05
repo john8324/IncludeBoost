@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    def tt = getProjectDir()
+    def t2 = tt.toString() + "/src/main/jniLibs/\$(TARGET_ARCH_ABI)/"
+    defaultConfig {
+        applicationId "com.example.john8324.includeboost"
+        minSdkVersion 21
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            moduleName "ib"
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+            stl "gnustl_shared"
+            cFlags "-std=c++11 -fexceptions -frtti -I" + tt.toString() + "/include"
+            ldLibs "log"
+            ldLibs t2 + "libboost_atomic-gcc-mt-1_53.a", t2 + "libboost_chrono-gcc-mt-1_53.a", t2 + "libboost_context-gcc-mt-1_53.a", t2 + "libboost_date_time-gcc-mt-1_53.a", \
+             t2 + "libboost_exception-gcc-mt-1_53.a", t2 + "libboost_filesystem-gcc-mt-1_53.a", t2 + "libboost_graph-gcc-mt-1_53.a", t2 + "libboost_iostreams-gcc-mt-1_53.a", \
+              t2 + "libboost_math_c99-gcc-mt-1_53.a", t2 + "libboost_math_c99f-gcc-mt-1_53.a", t2 + "libboost_math_c99l-gcc-mt-1_53.a", t2 + "libboost_math_tr1-gcc-mt-1_53.a", \
+               t2 + "libboost_math_tr1f-gcc-mt-1_53.a", t2 + "libboost_math_tr1l-gcc-mt-1_53.a", t2 + "libboost_prg_exec_monitor-gcc-mt-1_53.a", t2 + "libboost_program_options-gcc-mt-1_53.a", \
+                t2 + "libboost_random-gcc-mt-1_53.a", t2 + "libboost_regex-gcc-mt-1_53.a", t2 + "libboost_serialization-gcc-mt-1_53.a", t2 + "libboost_system-gcc-mt-1_53.a", \
+                 t2 + "libboost_test_exec_monitor-gcc-mt-1_53.a", t2 + "libboost_thread-gcc-mt-1_53.a", t2 + "libboost_timer-gcc-mt-1_53.a", t2 + "libboost_unit_test_framework-gcc-mt-1_53.a", \
+                  t2 + "libboost_wave-gcc-mt-1_53.a", t2 + "libboost_wserialization-gcc-mt-1_53.a"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
